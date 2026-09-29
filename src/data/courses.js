@@ -210,6 +210,43 @@ export const courses = [
     ],
     project:
       "Build a command line expense tracker that saves and summarises spending by month.",
+  },
+  {
+    id: "html-structure",
+    title: "HTML5 from Scratch",
+    language: "HTML",
+    icon: "5",
+    className: "html",
+    category: "Frontend",
+    level: "Beginner",
+    description:
+      "Build semantic, accessible page structures and learn the HTML5 elements that modern frameworks still rely on.",
+    lessons: 24,
+    hours: 4,
+    students: 15760,
+    rating: 4.6,
+    progress: 100,
+    modules: [
+      "Document Structure",
+      "Text & Semantic Tags",
+      "Links & Navigation",
+      "Images, Audio & Video",
+      "Forms & Inputs",
+      "Accessibility Basics",
+    ],
+    highlights: [
+      "Structure documents with semantic tags instead of div soup",
+      "Build forms with labels, validation and helpful error text",
+      "Embed images, audio and video with correct fallbacks",
+      "Apply the accessibility and SEO habits reviewers check",
+    ],
+    requirements: [
+      "Any text editor and a modern browser",
+      "No coding experience required",
+    ],
+    project:
+      "Build a semantic, accessible portfolio page with a fully validated contact form.",
+  },
   {
     id: "css-styling",
     title: "Modern CSS & Layouts",
@@ -281,6 +318,43 @@ export const courses = [
     ],
     project:
       "Ship a dashboard with routing, data fetching, search and reusable components.",
+  },
+  {
+    id: "node-backend",
+    title: "Node.js & Express Backend",
+    language: "Node.js",
+    icon: "⬡",
+    className: "node",
+    category: "Backend",
+    level: "Intermediate",
+    description:
+      "Go full stack. Design REST APIs, wire up authentication and connect a real database to a production-style server.",
+    lessons: 58,
+    hours: 14,
+    students: 10230,
+    rating: 4.7,
+    progress: 0,
+    modules: [
+      "Node Runtime & Modules",
+      "Your First Express Server",
+      "REST API Design",
+      "Middleware & Error Handling",
+      "Authentication & JWT",
+      "Deploying to Production",
+    ],
+    highlights: [
+      "Design REST APIs that are predictable and easy to consume",
+      "Write middleware for logging, auth and error handling",
+      "Authenticate users with hashed passwords and JWT",
+      "Deploy a server with environment variables and a database",
+    ],
+    requirements: [
+      "JavaScript fundamentals and a little HTTP knowledge",
+      "Node.js 18 or newer installed locally",
+    ],
+    project:
+      "Deploy a production style API with JWT auth, validation and a live database.",
+  },
   {
     id: "sql-database",
     title: "SQL for Absolute Beginners",
@@ -339,6 +413,20 @@ export const courses = [
       "Aggregation Pipeline",
       "Mongoose Schemas",
       "Connecting to Express",
+    ],
+    highlights: [
+      "Model data as documents and pick sensible collections",
+      "Write CRUD operations and expressive query filters",
+      "Summarise data with the aggregation pipeline",
+      "Connect MongoDB to Express through Mongoose schemas",
+    ],
+    requirements: [
+      "Node.js basics and a local or cloud MongoDB instance",
+      "Comfort reading JSON documents",
+    ],
+    project:
+      "Build a contact manager API with Mongoose schemas, validation and search.",
+  },
   {
     id: "postgresql",
     title: "PostgreSQL Advanced Queries",
@@ -413,109 +501,136 @@ export const courses = [
   },
 ];
 
-    ],
-    highlights: [
-      "Model data as documents and pick sensible collections",
-      "Write CRUD operations and expressive query filters",
-      "Summarise data with the aggregation pipeline",
-      "Connect MongoDB to Express through Mongoose schemas",
-    ],
-    requirements: [
-      "Node.js basics and a local or cloud MongoDB instance",
-      "Comfort reading JSON documents",
-    ],
-    project:
-      "Build a contact manager API with Mongoose schemas, validation and search.",
-  },
+/**
+ * Narrows the catalog down using the current search
+ * term, category, level and sort order.
+ */
+export function selectCourses({
+  search,
+  category,
+  level,
+  sort,
+}) {
+  const term = search.trim().toLowerCase();
 
-  },
-  {
-    id: "node-backend",
-    title: "Node.js & Express Backend",
-    language: "Node.js",
-    icon: "⬡",
-    className: "node",
-    category: "Backend",
-    level: "Intermediate",
-    description:
-      "Go full stack. Design REST APIs, wire up authentication and connect a real database to a production-style server.",
-    lessons: 58,
-    hours: 14,
-    students: 10230,
-    rating: 4.7,
-    progress: 0,
-    modules: [
-      "Node Runtime & Modules",
-      "Your First Express Server",
-      "REST API Design",
-      "Middleware & Error Handling",
-      "Authentication & JWT",
-      "Deploying to Production",
-    ],
-    highlights: [
-      "Design REST APIs that are predictable and easy to consume",
-      "Write middleware for logging, auth and error handling",
-      "Authenticate users with hashed passwords and JWT",
-      "Deploy a server with environment variables and a database",
-    ],
-    requirements: [
-      "JavaScript fundamentals and a little HTTP knowledge",
-      "Node.js 18 or newer installed locally",
-    ],
-    project:
-      "Deploy a production style API with JWT auth, validation and a live database.",
-  },
+  const filtered = courses.filter((course) => {
+    const matchesSearch =
+      !term ||
+      course.title.toLowerCase().includes(term) ||
+      course.language.toLowerCase().includes(term) ||
+      course.description.toLowerCase().includes(term);
 
-  },
-  {
-    id: "html-structure",
-    title: "HTML5 from Scratch",
-    language: "HTML",
-    icon: "5",
-    className: "html",
-    category: "Frontend",
-    level: "Beginner",
-    description:
-      "Build semantic, accessible page structures and learn the HTML5 elements that modern frameworks still rely on.",
-    lessons: 24,
-    hours: 4,
-    students: 15760,
-    rating: 4.6,
-    progress: 100,
-    modules: [
-      "Document Structure",
-      "Text & Semantic Tags",
-      "Links & Navigation",
-      "Images, Audio & Video",
-      "Forms & Inputs",
-      "Accessibility Basics",
-    ],
-    highlights: [
-      "Structure documents with semantic tags instead of div soup",
-      "Build forms with labels, validation and helpful error text",
-      "Embed images, audio and video with correct fallbacks",
-      "Apply the accessibility and SEO habits reviewers check",
-    ],
-    requirements: [
-      "Any text editor and a modern browser",
-      "No coding experience required",
-    ],
-    project:
-      "Build a semantic, accessible portfolio page with a fully validated contact form.",
-  },
+    const matchesCategory =
+      category === CATEGORIES[0] ||
+      course.category === category;
 
+    const matchesLevel =
+      level === LEVELS[0] || course.level === level;
 
-    ],
-    highlights: [
-      "Create tables with keys and constraints that protect your data",
-      "Filter, sort and limit results with WHERE, ORDER BY and LIMIT",
-      "Write safe INSERT, UPDATE and DELETE statements",
-      "Join tables and summarise data with GROUP BY",
-    ],
-    requirements: [
-      "Any SQL sandbox — SQLite and MySQL both work",
-      "No database experience required",
-    ],
-    project:
-      "Design a shop database and answer 25 real business questions with queries.",
-  },
+    return matchesSearch && matchesCategory && matchesLevel;
+  });
+
+  const sorters = {
+    popular: (a, b) => b.students - a.students,
+    rating: (a, b) => b.rating - a.rating,
+    az: (a, b) => a.title.localeCompare(b.title),
+    shortest: (a, b) => a.hours - b.hours,
+  };
+
+  return [...filtered].sort(
+    sorters[sort] ?? sorters.popular,
+  );
+}
+
+/** Formats 12480 as "12.4k" for the student count. */
+export function formatStudents(count) {
+  return count >= 1000
+    ? `${(count / 1000).toFixed(1)}k`
+    : String(count);
+}
+
+/**
+ * Looks a course up by the :courseId route param.
+ * Returns null so the page can render a not-found state.
+ */
+export function getCourseById(id) {
+  return courses.find((course) => course.id === id) ?? null;
+}
+
+/**
+ * Courses shown at the bottom of a detail page: same
+ * category first, then same language, never the course
+ * itself. Keeps the suggestions useful on a small catalog.
+ */
+export function getRelatedCourses(course, limit = 3) {
+  if (!course) {
+    return [];
+  }
+
+  return courses
+    .filter((item) => item.id !== course.id)
+    .sort((a, b) => {
+      const score = (item) => {
+        if (item.category === course.category) {
+          return 2;
+        }
+
+        return item.language === course.language ? 1 : 0;
+      };
+
+      return score(b) - score(a);
+    })
+    .slice(0, limit);
+}
+
+/**
+ * Spreads a course's lesson count across its modules and
+ * flags each one as done / current / locked based on the
+ * stored progress, so the detail page needs no extra data.
+ */
+export function buildCurriculum(course) {
+  const moduleCount = course.modules.length;
+  const doneCount = Math.min(
+    moduleCount,
+    Math.floor((course.progress / 100) * moduleCount),
+  );
+
+  return course.modules.map((title, index) => {
+    const lessons = Math.max(
+      1,
+      Math.round(course.lessons / moduleCount),
+    );
+    const minutes = Math.max(
+      10,
+      Math.round((course.hours * 60) / moduleCount),
+    );
+
+    return {
+      id: `${course.id}-module-${index}`,
+      number: index + 1,
+      title,
+      lessons,
+      minutes,
+      status:
+        index < doneCount
+          ? "done"
+          : index === doneCount && course.progress < 100
+            ? "current"
+            : "locked",
+    };
+  });
+}
+
+/**
+ * One label for the main call to action so the course card
+ * and the detail page never disagree about it.
+ */
+export function getCourseActionLabel(course) {
+  if (course.progress === 100) {
+    return "Review Course";
+  }
+
+  return course.progress > 0
+    ? "Continue Learning"
+    : "Start Course";
+}

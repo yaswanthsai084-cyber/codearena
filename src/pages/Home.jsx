@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  Home as HomeIcon,
   BookOpen,
   Gamepad2,
   Trophy,
@@ -13,7 +12,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import ThemeToggle from "../components/ThemeToggle";
+import SiteNavbar from "../components/SiteNavbar";
 
 import "./Home.css";
 
@@ -89,61 +88,7 @@ function Home() {
 
       {/* ================= NAVBAR ================= */}
 
-      <header className="navbar">
-
-        <div className="brand">
-          <div className="brand-logo">
-            <Code2 size={44} />
-          </div>
-
-          <div>
-            <h1>
-              Code<span>Arena</span>
-            </h1>
-
-            <p>Learn • Practice • Build • Grow</p>
-          </div>
-        </div>
-
-        <nav className="nav-links">
-
-          <a className="active" href="#home">
-            <HomeIcon size={18} />
-            Home
-          </a>
-
-          <Link to="/courses">
-            <BookOpen size={18} />
-            Courses
-          </Link>
-
-          <a href="#games">
-            <Gamepad2 size={18} />
-            Games
-          </a>
-
-          <a href="#leaderboard">
-            <Trophy size={18} />
-            Leaderboard
-          </a>
-
-        </nav>
-
-        <div className="nav-actions">
-
-          <ThemeToggle />
-
-          <Link to="/login" className="login-button">
-            Login
-          </Link>
-
-          <Link to="/register" className="signup-button">
-            Sign Up
-          </Link>
-
-        </div>
-
-      </header>
+      <SiteNavbar active="home" />
 
 
       {/* ================= HERO ================= */}
