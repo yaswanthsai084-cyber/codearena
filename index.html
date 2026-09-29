@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CodeArena — learn to code with structured courses, hands-on coding games and leaderboards."
+    />
+    <meta name="theme-color" content="#06051a" />
+    <title>CodeArena — Learn • Practice • Build • Grow</title>
+
+    <script>
+      /* Stamp the stored theme on <html> before the first
+         paint so the page never flashes the wrong colours. */
+      (function () {
+        var theme = "dark";
+
+        try {
+          var stored = window.localStorage.getItem(
+            "codearena-theme",
+          );
+
+          if (stored === "light" || stored === "dark") {
+            theme = stored;
+          } else if (
+            window.matchMedia("(prefers-color-scheme: light)")
+              .matches
+          ) {
+            theme = "light";
+          }
+        } catch (error) {
+          /* localStorage unavailable — stay on dark */
+        }
+
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
