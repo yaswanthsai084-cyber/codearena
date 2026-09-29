@@ -1322,3 +1322,73 @@
 .progress-fill {
   box-shadow: 0 0 12px rgb(var(--rgb-cyan) / 55%);
 }
+
+
+/* =====================================================
+   ROADMAP FIGURE — the generated roadmap image
+   ===================================================== */
+
+.graph-lede {
+  margin-top: 14px;
+}
+
+.roadmap-figure {
+  margin: 20px 0 0;
+}
+
+.roadmap-figure img {
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  border: 1px solid var(--line-mid);
+
+  background: var(--bg-base);
+}
+
+.roadmap-figure figcaption {
+  margin-top: 11px;
+
+  color: var(--text-faint);
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   ROADMAP FIGURE — CYBERPUNK LAYER
+   ===================================================== */
+
+.roadmap-figure {
+  position: relative;
+
+  padding: 10px;
+
+  border: 1px solid var(--line-dim);
+
+  background: var(--grad-panel);
+
+  clip-path: var(--clip-md);
+}
+
+.roadmap-figure img {
+  border-color: var(--line-soft);
+}
+
+.roadmap-figure::before {
+  content: "";
+
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  height: 2px;
+
+  background: var(--grad-neon);
+  box-shadow: 0 0 12px rgb(var(--rgb-cyan) / 70%);
+
+  opacity: 0.6;
+}

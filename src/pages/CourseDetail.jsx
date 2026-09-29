@@ -28,6 +28,8 @@ import {
   formatStudents,
 } from "../data/courses";
 
+import { cPath, countTopics } from "../data/syllabus-c.js";
+
 import SiteNavbar from "../components/SiteNavbar";
 
 import "./CourseDetail.css";
@@ -65,9 +67,17 @@ function CourseDetail() {
   const actionLabel = getCourseActionLabel(course);
   const isDone = course.progress === 100;
 
-  const doneCount = curriculum.filter(
-    (module) => module.status === "done",
-  ).length;
+  /* C ships a full path, so its curriculum is drawn as a
+     graph. Every other course uses the flat module list. */
+  const path = course.id === cPath.courseId ? cPath : null;
+
+  const doneCount = path
+    ? Math.floor((course.progress / 100) * countTopics(path))
+    : curriculum.filter(
+        (module) => module.status === "done",
+      ).length;
+
+  const totalUnits = path ? countTopics(path) : curriculum.length;
 
   function toggleModule(index) {
     setOpenModule((current) =>
@@ -211,8 +221,8 @@ function CourseDetail() {
               </div>
 
               <p className="progress-caption">
-                {doneCount} of {curriculum.length} modules
-                finished
+                {doneCount} of {totalUnits}{" "}
+                {path ? "topics" : "modules"} finished
               </p>
 
             </section>
@@ -249,13 +259,43 @@ function CourseDetail() {
               <h2>Course curriculum</h2>
             </div>
 
-            <p className="panel-subtitle">
-              {curriculum.length} modules ·{" "}
-              {course.lessons} lessons ·{" "}
-              {course.hours} hours in total
-            </p>
+            {path ? (
+              <>
+                <p className="panel-subtitle">
+                  {path.levels.length} levels ·{" "}
+                  {countTopics(path)} topics ·{" "}
+                  {path.phases.length} stages
+                </p>
 
-            <ul className="curriculum-list">
+                <p className="panel-text graph-lede">
+                  The whole path drawn in one picture — from
+                  your very first line of C to the end.
+                </p>
+
+                <figure className="roadmap-figure">
+                  <img
+                    src="/images/c-roadmap.png"
+                    alt={`C Programming learning roadmap: ${path.levels.length} levels across ${path.phases.length} stages, from ${path.start.label} to ${path.finish.label}`}
+                    width="1000"
+                    height="1812"
+                    loading="lazy"
+                  />
+
+                  <figcaption>
+                    Open the full size image to study the path
+                    in detail.
+                  </figcaption>
+                </figure>
+              </>
+            ) : (
+              <>
+                <p className="panel-subtitle">
+                  {curriculum.length} modules ·{" "}
+                  {course.lessons} lessons ·{" "}
+                  {course.hours} hours in total
+                </p>
+
+                <ul className="curriculum-list">
 
               {curriculum.map((module, index) => {
                 const isOpen = openModule === index;
@@ -331,8 +371,9 @@ function CourseDetail() {
                   </li>
                 );
               })}
-
-            </ul>
+                </ul>
+              </>
+            )}
 
           </section>
 

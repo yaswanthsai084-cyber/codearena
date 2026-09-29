@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "roadmap": "node tools/roadmap-to-json.mjs && python3 tools/roadmap-svg.py && rsvg-convert -w 1400 -b '#06051a' tools/roadmap.svg -o public/images/c-roadmap.png && cp tools/roadmap.svg public/images/c-roadmap.svg"
   },
   "dependencies": {
     "lucide-react": "^1.48.0",
